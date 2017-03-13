@@ -1,0 +1,79 @@
+imports:
+    - { resource: services.yml }
+
+parameters:
+    locale: en_US
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     lin3s_admin
+    database_user:     root
+    database_password: ~
+
+framework:
+    translator: { fallbacks: ["%locale%"] }
+    secret: "%secret"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: "%kernel.debug%"
+    form: true
+    csrf_protection: true
+    validation: { enable_annotations: true }
+    templating: { engines: ["twig"] }
+    default_locale: "%locale%"
+    trusted_proxies: ~
+    session:
+        handler_id: ~
+    test: ~
+
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/../var/data/data.sqlite"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+
+lin3s_admin:
+    entities:
+        product:
+            name:
+                singular: Product
+                plural: Products
+            class: Tests\Application\ExampleBundle\Entity\Product
+            actions:
+                edit:
+                    type: ddd_handle_command
+                    options:
+                        name: Edit
+                        form: Tests\Application\ExampleBundle\Form\Type\ProductType
+            list:
+                fields:
+                    id:
+                        type: string
+                        options:
+                            name: 'Id'
+                            field: id
+                    title:
+                        type: string
+                        options:
+                            name: 'Title'
+                            field: getTitle
+                    actions:
+                        type: actions
+                        options:
+                            actions: ['edit']
+                            name: lin3s_admin.list.table.actions
