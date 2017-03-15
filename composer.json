@@ -37,5 +37,7 @@
         "psr-4": {
             "Tests\\Application\\": "tests/Application/src/"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
