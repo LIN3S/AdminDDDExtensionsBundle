@@ -15,6 +15,6 @@ $ composer require lin3s/admin-ddd-extension-bundle
 ```
 
 ## Licensing Options
-[![License](https://poser.pugx.org/lin3s/admin-bundle/license.svg)](https://github.com/LIN3S/AdminCRUDExtensionsBundle/blob/master/LICENSE)
+[![License](https://poser.pugx.org/lin3s/admin-ddd-extension-bundle/license.svg)](https://github.com/LIN3S/AdminDDDExtensionsBundle/blob/master/LICENSE)
 
 [1]: http://getcomposer.org
