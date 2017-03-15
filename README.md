@@ -11,10 +11,10 @@
 The easiest way to install this component is using **[Composer][1]**
 
 ```bash
-$ composer require lin3s/admin-ddd-extension-bundle
+$ composer require lin3s/admin-ddd-extensions-bundle
 ```
 
 ## Licensing Options
-[![License](https://poser.pugx.org/lin3s/admin-ddd-extension-bundle/license.svg)](https://github.com/LIN3S/AdminDDDExtensionsBundle/blob/master/LICENSE)
+[![License](https://poser.pugx.org/lin3s/admin-ddd-extensions-bundle/license.svg)](https://github.com/LIN3S/AdminDDDExtensionsBundle/blob/master/LICENSE)
 
 [1]: http://getcomposer.org
