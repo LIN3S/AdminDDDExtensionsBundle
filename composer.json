@@ -1,41 +1,41 @@
 {
-  "name": "lin3s/admin-ddd-extensions-bundle",
-  "description": "DDD extensions for LIN3S-Admin",
-  "type": "symfony-bundle",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "LIN3S",
-      "email": "info@lin3s.com",
-      "homepage": "https://lin3s.com"
-    }
-  ],
-  "require": {
-    "lin3s/admin-bundle": "dev-master",
-    "lin3s/shared-kernel": "^0.1",
-    "lin3s/cms-kernel": "^0.1",
-    "simple-bus/symfony-bridge": "^4.1"
-  },
-  "require-dev": {
-    "friendsofphp/php-cs-fixer": "^1.11"
-  },
-  "scripts": {
-    "cs": [
-      "vendor/bin/php-cs-fixer fix --config-file=.php_cs",
-      "vendor/bin/php-cs-fixer fix --config-file=.phpspec_cs"
-    ]
-  },
-  "autoload": {
-    "psr-4": {
-      "LIN3S\\AdminDDDExtensionsBundle\\": "src/LIN3S/AdminDDDExtensionsBundle/"
+    "name": "lin3s/admin-ddd-extensions-bundle",
+    "description": "DDD extensions for LIN3S-Admin",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "LIN3S",
+            "email": "info@lin3s.com",
+            "homepage": "https://lin3s.com"
+        }
+    ],
+    "require": {
+        "lin3s/admin-bundle": "dev-master",
+        "lin3s/shared-kernel": "dev-master",
+        "lin3s/cms-kernel": "dev-master"
     },
-    "exclude-from-classmap": [
-      "/spec/"
-    ]
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\Application\\": "tests/Application/src/"
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^1.11",
+        "simple-bus/symfony-bridge": "^4.1"
+    },
+    "scripts": {
+        "cs": [
+            "vendor/bin/php-cs-fixer fix --config-file=.php_cs",
+            "vendor/bin/php-cs-fixer fix --config-file=.phpspec_cs"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "LIN3S\\AdminDDDExtensionsBundle\\": "src/LIN3S/AdminDDDExtensionsBundle/"
+        },
+        "exclude-from-classmap": [
+            "/spec/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Application\\": "tests/Application/src/"
+        }
     }
-  }
 }
