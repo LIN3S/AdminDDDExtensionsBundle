@@ -12,9 +12,14 @@ services:
         class: LIN3S\AdminDDDExtensionsBundle\Action\HandleCommandActionType
         arguments:
            - "@form.factory"
-           - "@lin3s.cms_kernel.application.command_bus"
+           - ~                      # *
            - "@twig"
            - "@session.flash_bag"
            - "@router"
         tags:
             - { name: 'lin3s_admin.action', alias: ddd_handle_command }
+
+
+## *
+# Need to pass via compiler pass the definition of the service that implements
+# "LIN3S\SharedKernel\Application\CommandBus" interface.
