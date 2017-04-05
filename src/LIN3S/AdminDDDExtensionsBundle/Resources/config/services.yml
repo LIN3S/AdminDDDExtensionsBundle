@@ -11,7 +11,7 @@ services:
     lin3s_admin_ddd_extension.action.type.handle_command:
         class: LIN3S\AdminDDDExtensionsBundle\Action\HandleCommandActionType
         arguments:
-           - "@lin3s_admin.form.handler"
+           - "@form.factory"
            - "@lin3s.cms_kernel.application.command_bus"
            - "@twig"
            - "@session.flash_bag"
