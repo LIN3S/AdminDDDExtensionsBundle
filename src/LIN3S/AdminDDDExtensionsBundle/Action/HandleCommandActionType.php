@@ -14,6 +14,7 @@ namespace LIN3S\AdminDDDExtensionsBundle\Action;
 use LIN3S\AdminBundle\Configuration\Model\Entity;
 use LIN3S\AdminBundle\Configuration\Type\ActionType;
 use LIN3S\SharedKernel\Application\CommandBus;
+use LIN3S\SharedKernel\Exception\Exception;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class HandleCommandActionType implements ActionType
 {
-    use EntityId;
     use OptionResolver;
     use Redirect;
 
@@ -48,24 +48,27 @@ final class HandleCommandActionType implements ActionType
 
     public function execute($entity, Entity $config, Request $request, $options = [])
     {
+        $entityName = $config->name();
+
         $this->checkRequired($options, 'form');
 
         $form = $this->formFactory->create($options['form'], $entity);
         if ($request->isMethod('POST') || $request->isMethod('PUT') || $request->isMethod('PATCH')) {
             $form->handleRequest($request);
             if ($form->isValid() && $form->isSubmitted()) {
-                $this->commandBus->handle(
-                    $form->getData()
-                );
-                $this->flashBag->add(
-                    'lin3s_admin_success',
-                    sprintf(
-                        'The %s is successfully saved',
-                        $config->name()
-                    )
-                );
+                try {
+                    $command = $form->getData();
+                    $this->commandBus->handle($command);
 
-                return $this->redirect($this->urlGenerator, $options, $config->name(), $form->getData());
+                    $this->flashBag->add(
+                        'lin3s_admin_success',
+                        sprintf('The %s is successfully saved', $entityName)
+                    );
+
+                    return $this->redirect($this->urlGenerator, $options, $entityName, $command);
+                } catch (Exception $exception) {
+                    $this->addError($exception, $options);
+                }
             }
             $this->flashBag->add(
                 'lin3s_admin_error',
@@ -83,5 +86,24 @@ final class HandleCommandActionType implements ActionType
                 'form'         => $form->createView(),
             ])
         );
+    }
+
+    private function addError(Exception $exception, array $options)
+    {
+        $exceptions = $this->catchableExceptions($options);
+        $exceptionClassName = get_class($exception);
+
+        if (array_key_exists($exceptionClassName, $exceptions)) {
+            $this->flashBag->add('lin3s_admin_error', $exceptions[$exceptionClassName]);
+        }
+    }
+
+    private function catchableExceptions(array $options)
+    {
+        if (!isset($options['catchable_exceptions'])) {
+            return [];
+        }
+
+        return json_decode($options['catchable_exceptions'], true);
     }
 }
