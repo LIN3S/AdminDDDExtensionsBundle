@@ -16,6 +16,7 @@ services:
            - "@twig"
            - "@session.flash_bag"
            - "@router"
+           - "@translator"
         tags:
             - { name: 'lin3s_admin.action', alias: ddd_handle_command }
 

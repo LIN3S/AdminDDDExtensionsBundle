@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 final class HandleCommandActionType implements ActionType
 {
@@ -31,19 +32,22 @@ final class HandleCommandActionType implements ActionType
     private $formFactory;
     private $commandBus;
     private $urlGenerator;
+    private $translator;
 
     public function __construct(
         FormFactoryInterface $formFactory,
         CommandBus $commandBus,
         \Twig_Environment $twig,
         FlashBagInterface $flashBag,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        TranslatorInterface $translator
     ) {
         $this->formFactory = $formFactory;
         $this->commandBus = $commandBus;
         $this->twig = $twig;
         $this->flashBag = $flashBag;
         $this->urlGenerator = $urlGenerator;
+        $this->translator = $translator;
     }
 
     public function execute($entity, Entity $config, Request $request, $options = [])
@@ -93,8 +97,14 @@ final class HandleCommandActionType implements ActionType
         $exceptions = $this->catchableExceptions($options);
         $exceptionClassName = get_class($exception);
 
+
         if (array_key_exists($exceptionClassName, $exceptions)) {
-            $this->flashBag->add('lin3s_admin_error', $exceptions[$exceptionClassName]);
+            $exceptionName = get_class($exception);
+            if (array_key_exists($exceptionName, $exceptions)) {
+                $translation = $this->translator->trans($exceptions[$exceptionName]);
+            }
+            $this->flashBag->add('lin3s_admin_error', isset($translation) ?
+                $translation : $exceptions[$exceptionClassName]);
         }
     }
 
