@@ -1,9 +1,0 @@
-services:
-    # Overriden to avoid issues with the path
-    lin3s_cms_kernel.views.twig.loader:
-        class: Twig_Loader_Filesystem
-        public: false
-        arguments:
-            - ["%kernel.root_dir%/../../../vendor/lin3s/cms-kernel/src/LIN3S/CMSKernel/Infrastructure/Ui/views/Twig"]
-        tags:
-            - { name: twig.loader }

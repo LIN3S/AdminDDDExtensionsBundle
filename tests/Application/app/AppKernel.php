@@ -24,9 +24,10 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new LIN3S\AdminBundle\Lin3sAdminBundle(),
             new \LIN3S\AdminDDDExtensionsBundle\Lin3sAdminDDDExtensionsBundle(),
-            new \LIN3S\CMSKernel\Infrastructure\Symfony\Lin3sCmsKernelBundle(),
+            new \LIN3S\CMSKernel\Infrastructure\Symfony\Bundle\Lin3sCmsKernelBundle(),
             new \SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
             new Tests\Application\ExampleBundle\ApplicationExampleBundle(),
+            new Symfony\Bundle\WebServerBundle\WebServerBundle(),
         ];
     }
 

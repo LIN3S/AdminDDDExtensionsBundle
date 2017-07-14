@@ -11,13 +11,15 @@
         }
     ],
     "require": {
-        "lin3s/admin-bundle": "dev-master",
+        "lin3s/admin-bundle": "^0.5",
         "lin3s/shared-kernel": "^0.3"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^1.11",
         "lin3s/cms-kernel": "dev-master",
-        "simple-bus/symfony-bridge": "^4.1"
+        "simple-bus/symfony-bridge": "^4.1",
+        "symfony/web-server-bundle": "^3.3",
+        "monolog/monolog": "^1.23"
     },
     "scripts": {
         "cs": [
