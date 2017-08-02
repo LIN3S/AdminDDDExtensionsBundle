@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "lin3s/admin-bundle": "^0.5 || dev-master",
+        "lin3s/admin-bundle": "^0.5 || dev-master || *",
         "lin3s/shared-kernel": "^0.3"
     },
     "require-dev": {
