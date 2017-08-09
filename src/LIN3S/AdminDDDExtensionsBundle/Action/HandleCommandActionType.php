@@ -15,7 +15,9 @@ use LIN3S\AdminBundle\Configuration\Model\Entity;
 use LIN3S\AdminBundle\Configuration\Type\ActionType;
 use LIN3S\SharedKernel\Application\CommandBus;
 use LIN3S\SharedKernel\Exception\Exception;
+use LIN3S\SharedKernel\Exception\InvalidArgumentException;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -28,9 +30,6 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 final class HandleCommandActionType implements ActionType
 {
-    use OptionResolver;
-    use Redirect;
-
     private $flashBag;
     private $twig;
     private $formFactory;
@@ -67,6 +66,17 @@ final class HandleCommandActionType implements ActionType
                     $this->commandBus->handle($command);
 
                     $this->flashBag->add('lin3s_admin_success', $this->successMessage($config));
+
+                    if (isset($options['redirect_action'])) {
+                        return new RedirectResponse(
+                            $this->urlGenerator->generate('lin3s_admin_custom', [
+                                'action' => $options['redirect_action'],
+                                'entity' => $entity,
+                                'id'     => $command->id(),
+                            ])
+                        );
+                    }
+
                 } catch (Exception $exception) {
                     $this->addError($exception, $options);
                 }
@@ -82,6 +92,18 @@ final class HandleCommandActionType implements ActionType
                 'form'         => $form->createView(),
             ])
         );
+    }
+
+    private function checkRequired($options, $field)
+    {
+        if (!isset($options[$field])) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    '%s option is required so, you must declare inside action in the admin.yml',
+                    $field
+                )
+            );
+        }
     }
 
     private function addError(Exception $exception, array $options)
