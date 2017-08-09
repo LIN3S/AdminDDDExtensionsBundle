@@ -15,15 +15,10 @@ use LIN3S\AdminDDDExtensionsBundle\DependencyInjection\Lin3sAdminDDDExtensionsEx
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Lin3sAdminDDDExtensionsExtension's kernel class.
- *
  * @author Gorka Laucirica <gorka.lauzirka@gmail.com>
  */
 final class Lin3sAdminDDDExtensionsBundle extends Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getContainerExtension()
     {
         return new Lin3sAdminDDDExtensionsExtension();

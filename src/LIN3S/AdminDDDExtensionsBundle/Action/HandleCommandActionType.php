@@ -22,6 +22,10 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * @author Beñat Espiña <benatespina@gmail.com>
+ * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
+ */
 final class HandleCommandActionType implements ActionType
 {
     use OptionResolver;
@@ -52,8 +56,6 @@ final class HandleCommandActionType implements ActionType
 
     public function execute($entity, Entity $config, Request $request, $options = [])
     {
-        $entityName = $config->name();
-
         $this->checkRequired($options, 'form');
 
         $form = $this->formFactory->create($options['form'], $entity);
@@ -64,23 +66,13 @@ final class HandleCommandActionType implements ActionType
                     $command = $form->getData();
                     $this->commandBus->handle($command);
 
-                    $this->flashBag->add(
-                        'lin3s_admin_success',
-                        sprintf('The %s is successfully saved', $entityName)
-                    );
-
-                    return $this->redirect($this->urlGenerator, $options, $entityName, $command);
+                    $this->flashBag->add('lin3s_admin_success', $this->successMessage($config));
                 } catch (Exception $exception) {
                     $this->addError($exception, $options);
                 }
+            } else {
+                $this->flashBag->add('lin3s_admin_error', $this->errorMessage($config));
             }
-            $this->flashBag->add(
-                'lin3s_admin_error',
-                sprintf(
-                    'Errors while saving %s. Please check all fields and try again',
-                    $config->name()
-                )
-            );
         }
 
         return new Response(
@@ -115,5 +107,35 @@ final class HandleCommandActionType implements ActionType
         }
 
         return json_decode($options['catchable_exceptions'], true);
+    }
+
+    private function successMessage(Entity $config)
+    {
+        return $this->message('success_flash', $config);
+    }
+
+    private function errorMessage(Entity $config)
+    {
+        return $this->message('error_flash', $config);
+    }
+
+    private function message($messageType, Entity $config)
+    {
+        return $this->translator->trans(
+            $messageType,
+            [
+                'resource' => lcfirst($this->translator->trans($this->entityName($config))),
+            ],
+            'Lin3sAdminDDDExtensions'
+        );
+    }
+
+    private function entityName(Entity $config)
+    {
+        if (array_key_exists('singular', $config->printNames())) {
+            return $config->printNames()['singular'];
+        }
+
+        return $config->name();
     }
 }

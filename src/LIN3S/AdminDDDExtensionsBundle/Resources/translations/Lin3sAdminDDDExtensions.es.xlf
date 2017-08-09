@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="success_flash" approved="yes">
+                <source>success_flash</source>
+                <target xml:lang="es-ES">El/La resource ha sido guardado/a correctamente</target>
+            </trans-unit>
+            <trans-unit id="error_flash" approved="yes">
+                <source>error_flash</source>
+                <target xml:lang="es-ES">Hay errores al guardar el/la resource. Por favor comprueba los campos y prueba de nuevo</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
