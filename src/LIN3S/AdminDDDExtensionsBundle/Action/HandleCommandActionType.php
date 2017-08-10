@@ -71,12 +71,11 @@ final class HandleCommandActionType implements ActionType
                         return new RedirectResponse(
                             $this->urlGenerator->generate('lin3s_admin_custom', [
                                 'action' => $options['redirect_action'],
-                                'entity' => $entity,
+                                'entity' => $config->name(),
                                 'id'     => $command->id(),
                             ])
                         );
                     }
-
                 } catch (Exception $exception) {
                     $this->addError($exception, $options);
                 }
