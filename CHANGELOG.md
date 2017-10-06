@@ -5,6 +5,8 @@ This changelog references the relevant changes done between versions.
 To get the diff for a specific change, go to https://github.com/LIN3S/AdminDDDExtensionsBundle/commit/XXX where XXX is the change hash 
 To get the diff between two versions, go to https://github.com/LIN3S/AdminDDDExtensionsBundle/compare/v0.1.0...v0.2.0
 
+* 0.2.3
+    * Become less strict shared kernel dependency.
 * 0.2.2
     * Fixed the redirection url generation passing the correct parameters.
 * 0.2.1
