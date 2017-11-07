@@ -10,6 +10,11 @@
                 <source>error_flash</source>
                 <target xml:lang="es-ES">Hay errores al guardar el/la resource. Por favor comprueba los campos y prueba de nuevo</target>
             </trans-unit>
+
+            <trans-unit id="error_handler" approved="yes">
+                <source>error_handler</source>
+                <target xml:lang="es-ES">Ha ocurrido un error en la aplicación: "%s". Si el problema persiste contacta con el administrador del sitio.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

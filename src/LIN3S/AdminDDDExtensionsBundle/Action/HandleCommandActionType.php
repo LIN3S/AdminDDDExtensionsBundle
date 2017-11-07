@@ -77,7 +77,7 @@ final class HandleCommandActionType implements ActionType
                         );
                     }
                 } catch (Exception $exception) {
-                    $this->addError($exception, $options);
+                    $this->addError($exception, $options, $config);
                 }
             } else {
                 $this->flashBag->add('lin3s_admin_error', $this->errorMessage($config));
@@ -105,7 +105,7 @@ final class HandleCommandActionType implements ActionType
         }
     }
 
-    private function addError(Exception $exception, array $options)
+    private function addError(Exception $exception, array $options, Entity $config)
     {
         $exceptions = $this->catchableExceptions($options);
         $exceptionClassName = get_class($exception);
@@ -118,6 +118,11 @@ final class HandleCommandActionType implements ActionType
             }
             $this->flashBag->add('lin3s_admin_error', isset($translation) ?
                 $translation : $exceptions[$exceptionClassName]);
+        } else {
+            $this->flashBag->add(
+                'lin3s_admin_error',
+                sprintf($this->message('error_handler', $config), $exceptionClassName)
+            );
         }
     }
 

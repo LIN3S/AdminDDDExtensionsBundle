@@ -10,6 +10,11 @@
                 <source>error_flash</source>
                 <target xml:lang="en-EN">Errors while saving the resource. Please check all fields and try again</target>
             </trans-unit>
+
+            <trans-unit id="error_handler" approved="yes">
+                <source>error_handler</source>
+                <target xml:lang="en-EN">There was an unknown error in the application: "%s". If the problem persists please contact the system administrator.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
